@@ -2,14 +2,136 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  @apply border-slate-700;
-}
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
 
 html {
   scroll-behavior: smooth;
+  font-family: 'VT323', monospace;
 }
 
 body {
-  @apply bg-slate-950 text-white;
+  background-color: #0a0e11;
+  color: #d4a302;
+  font-family: 'VT323', monospace !important;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(212, 163, 2, 0.03),
+      rgba(212, 163, 2, 0.03) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+}
+
+/* Scanlines effect */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  z-index: 1;
+}
+
+/* Terminal glow effect */
+@keyframes vault-glow {
+  0%, 100% {
+    text-shadow: 0 0 5px rgba(212, 163, 2, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(212, 163, 2, 0.8);
+  }
+}
+
+.vault-glow {
+  animation: vault-glow 3s infinite;
+}
+
+/* Vault-Boy style buttons */
+.vault-btn {
+  background-color: #d4a302;
+  color: #0a0e11;
+  border: 2px solid #a87d04;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: all 0.2s ease;
+}
+
+.vault-btn:hover {
+  background-color: #ffdc0d;
+  box-shadow: 0 0 10px rgba(212, 163, 2, 0.6);
+  transform: scale(1.05);
+}
+
+.vault-btn:active {
+  transform: scale(0.98);
+}
+
+/* Radiation style elements */
+.radiation-accent {
+  color: #22c55e;
+  text-shadow: 0 0 5px rgba(34, 197, 94, 0.4);
+}
+
+/* Oxide rust style */
+.oxide-accent {
+  color: #ea580c;
+  text-shadow: 0 0 5px rgba(234, 88, 12, 0.4);
+}
+
+/* Typing animation */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #d4a302;
+  }
+}
+
+.typing-text {
+  overflow: hidden;
+  border-right: 0.15em solid #d4a302;
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+  font-family: 'Courier Prime', monospace;
+}
+
+/* Bracket styling utility */
+.bracket-text::before {
+  content: '[ ';
+  color: #d4a302;
+}
+
+.bracket-text::after {
+  content: ' ]';
+  color: #d4a302;
+}
+
+/* Prompt marker */
+.prompt::before {
+  content: '> ';
+  color: #d4a302;
+  font-weight: bold;
+  margin-right: 0.25em;
 }

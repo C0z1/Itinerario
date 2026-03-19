@@ -64,48 +64,61 @@ export default function LogPage() {
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white pb-24">
+    <div className="min-h-screen bg-gradient-to-br from-fallout-dark via-fallout-dark to-fallout-darker text-vault-300 pb-24">
       <Header dayVersion={dayVersion} onVersionChange={setDayVersion} />
 
-      <main className="max-w-2xl mx-auto px-4 py-6">
-        <h2 className="text-2xl font-bold mb-6">Historial</h2>
+      <main className="max-w-2xl mx-auto px-4 py-8">
+        <h2 className="text-2xl font-bold mb-8 text-vault-400 font-fallout tracking-wider prompt">
+          HISTORIAL · ÚLTIMOS 30 DÍAS
+        </h2>
 
         <div className="space-y-3">
           {entries.length === 0 ? (
-            <div className="text-center py-12 text-slate-400">
-              No hay registros aún
+            <div className="text-center py-12 text-vault-600 font-fallout">
+              SIN REGISTROS AÚN
             </div>
           ) : (
             entries.map((entry, idx) => (
               <div
                 key={idx}
-                className="bg-slate-900 rounded-lg p-4 border border-slate-700 hover:border-slate-600 transition-colors"
+                className="bg-fallout-dark/60 rounded p-5 border-2 border-vault-700/50 hover:border-vault-600/80 transition-all hover:shadow-xl group"
               >
-                <div className="flex items-start justify-between mb-2">
-                  <div>
-                    <div className="font-semibold">{entry.date}</div>
-                    <div className="text-sm text-slate-400">
-                      {entry.completedHabits}/{entry.totalHabits} hábitos · Ver.
-                      {entry.dayVersion}
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    <div className="font-bold text-vault-300 font-fallout tracking-wide">
+                      {entry.date}
+                    </div>
+                    <div className="text-xs text-vault-600 font-fallout tracking-widest mt-1">
+                      {entry.completedHabits}/{entry.totalHabits} HÁBITOS · VER. {entry.dayVersion}
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-bold text-blue-400">
+                  <div className="text-right flex-shrink-0">
+                    <div className="text-3xl font-bold text-vault-400 font-fallout">
                       {entry.completedHabits}
                     </div>
-                    <div className="text-xs text-slate-500">completados</div>
+                    <div className="text-xs text-vault-600 font-fallout tracking-widest">
+                      {entry.completedHabits === entry.totalHabits ? "✓ COMPLETO" : "PARCIAL"}
+                    </div>
                   </div>
                 </div>
 
                 {entry.content && (
-                  <div className="mt-3 pt-3 border-t border-slate-700 text-sm text-slate-300">
-                    "{entry.content.substring(0, 100)}
-                    {entry.content.length > 100 ? "..." : ""}"
+                  <div className="mt-4 pt-4 border-t border-vault-700/50 text-sm text-vault-200 font-fallout leading-relaxed italic">
+                    <p className="text-vault-600 text-xs tracking-widest mb-2">NOTA DEL DÍA</p>
+                    <p>
+                      "{entry.content.substring(0, 120)}
+                      {entry.content.length > 120 ? "..." : ""}"
+                    </p>
                   </div>
                 )}
               </div>
             ))
           )}
+        </div>
+
+        <div className="mt-8 p-4 bg-fallout-dark/80 border-2 border-vault-700/50 rounded text-sm text-vault-200 font-fallout">
+          <p className="text-vault-600 tracking-widest text-xs mb-2">📋 INFORMACIÓN</p>
+          <p>Revisa tu historial diario para rastrear tu evolución en los últimos 30 días</p>
         </div>
       </main>
 

@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import {
   getScheduleForVersion,
-  getCurrentHour,
   getActiveBlock,
 } from "@/lib/constants/schedule";
 
@@ -12,63 +11,96 @@ interface ScheduleTimelineProps {
 }
 
 export function ScheduleTimeline({ dayVersion }: ScheduleTimelineProps) {
-  const [currentHour, setCurrentHour] = useState(0);
+  const [currentTime, setCurrentTime] = useState({ hour: 0, minute: 0, second: 0 });
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    setCurrentHour(getCurrentHour());
 
-    const timer = setInterval(() => {
-      setCurrentHour(getCurrentHour());
-    }, 60000); // Update every minute
+    const updateTime = () => {
+      const now = new Date();
+      setCurrentTime({
+        hour: now.getHours(),
+        minute: now.getMinutes(),
+        second: now.getSeconds()
+      });
+    };
 
+    updateTime();
+    const timer = setInterval(updateTime, 1000);
     return () => clearInterval(timer);
   }, []);
 
   if (!mounted) return null;
 
   const schedule = getScheduleForVersion(dayVersion);
-  const activeBlock = getActiveBlock(schedule, currentHour);
+  const activeBlock = getActiveBlock(schedule, currentTime.hour);
 
-  const isOutOfSchedule = currentHour < 7 || currentHour >= 21;
+  const isOutOfSchedule = currentTime.hour < 7 || currentTime.hour >= 21;
+
+  const blockColors: { [key: string]: string } = {
+    study: "from-green-800/60 to-green-900/40 border-green-600",
+    rest: "from-gray-900/80 to-gray-950 border-green-700",
+    fisico: "from-green-900/40 to-green-800/30 border-green-600",
+    itc: "from-green-900/40 to-green-800/30 border-green-600",
+    astrofisica: "from-green-900/40 to-green-800/30 border-green-600",
+  };
 
   return (
     <div className="space-y-3">
       {isOutOfSchedule && (
-        <div className="p-4 bg-slate-800 border border-slate-600 rounded-lg text-sm text-slate-300">
-          🌙 Fuera de horario - Descansa y recupérate
+        <div className="p-4 bg-green-900/30 border-2 border-green-600/50 rounded text-sm text-green-200 font-fallout">
+          <span className="font-bold tracking-widest">FUERA DE HORARIO</span> — Descansa y recuperate
         </div>
       )}
 
       {schedule.map((block) => {
         const isActive = activeBlock?.label === block.label;
+        const blockColor = blockColors[block.area] || blockColors.study;
 
         return (
           <div
             key={block.label}
-            className={`p-4 rounded-lg border transition-all ${
+            className={`relative p-5 rounded border-2 transition-all duration-300 overflow-hidden group bg-gradient-to-r ${blockColor} ${
               isActive
-                ? `bg-gradient-to-r ${block.color} border-transparent shadow-lg scale-105`
-                : "bg-slate-800 border-slate-600 hover:border-slate-500"
+                ? "shadow-xl shadow-green-600/30 scale-105"
+                : ""
             }`}
           >
-            <div className="flex items-center gap-3">
-              {isActive ? <span className="text-lg animate-pulse">▶</span> : <span className="text-lg">○</span>}
-              <div className="flex-1">
-                <div className="font-semibold">{block.label}</div>
-                <div className={`text-sm ${isActive ? "text-white" : "text-slate-400"}`}>
-                  {String(block.start).padStart(2, "0")}:00 –{" "}
-                  {String(block.end).padStart(2, "0")}:00
+            <div className="relative z-10 flex items-center gap-4">
+              <div className={`flex-shrink-0 w-12 h-12 rounded flex items-center justify-center font-bold font-fallout text-sm transition-all ${
+                isActive
+                  ? "bg-green-600 text-gray-900"
+                  : "bg-gray-900/80 text-green-600 border border-green-700"
+              }`}>
+                {String(block.start).padStart(2, "0")}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className={`font-semibold font-fallout tracking-wide truncate text-sm ${isActive ? "text-green-200" : "text-green-300"}`}>
+                  {block.label}
+                </div>
+                <div className={`text-xs mt-1 font-fallout ${isActive ? "text-green-100" : "text-green-600"}`}>
+                  {String(block.start).padStart(2, "0")}:00 – {String(block.end).padStart(2, "0")}:00
                 </div>
               </div>
+              {isActive && (
+                <div className="flex-shrink-0">
+                  <div className="relative w-3 h-3">
+                    <div className="absolute inset-0 bg-green-300 rounded-full animate-pulse" />
+                    <div className="absolute inset-0.5 bg-green-600 rounded-full" />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         );
       })}
 
-      <div className="mt-4 p-3 bg-slate-800 rounded-lg border border-slate-600 text-sm text-slate-400">
-        <strong>Hora actual:</strong> {String(currentHour).padStart(2, "0")}:00
+      <div className="mt-6 p-4 bg-gray-900 border-2 border-green-600/50 rounded text-center">
+        <p className="text-green-600 text-xs font-fallout tracking-widest">HORA ACTUAL</p>
+        <p className="text-4xl font-bold font-fallout text-green-400 mt-2 tracking-wider" style={{ textShadow: "0 0 10px rgba(34, 197, 94, 0.6)" }}>
+          {String(currentTime.hour).padStart(2, "0")}:{String(currentTime.minute).padStart(2, "0")}:{String(currentTime.second).padStart(2, "0")}
+        </p>
       </div>
     </div>
   );
