@@ -1,294 +1,163 @@
-# Bitácora Félix 📋
+# Bitácora Personal - 12-Month Itinerary Tracker
 
-Una bitácora personal diseñada para rastrear tu itinerario diario con 4 áreas principales: **ITC**, **Astrofísica**, **Físico**, y **Japonés**.
+A professional personal itinerary tracking application built with Next.js, Tailwind CSS, and Supabase. Track your daily progress across multiple life areas: Astrophysics, Technology, Physical Training, and Language Learning.
 
-Consulta la app múltiples veces al día desde cualquier dispositivo. Ideal para estudiantes con metas ambiciosas en múltiples dominios.
+## 🎯 Overview
 
----
+Bitácora is a personal journal and progress tracker designed to help you manage a comprehensive 12-month learning and development plan. It provides:
 
-## ✨ Características
+- **Real-time daily planning** with time-based activity tracking
+- **Progress monitoring** across 4 major life areas
+- **Habit tracking** with Supabase persistence
+- **Monthly curriculum objectives** automatically adjusted based on current month
+- **Professional terminal-style interface** with clean, distraction-free design
 
-- **📅 Vista Diaria**: Horario personalizado con bloque activo resaltado
-- **🎯 6 Hábitos Clave**: Marca los hábitos diarios de cada área
-- **✓ Gestión de Tareas**: Agrega y elimina tareas por área
-- **📊 Rastreador de Progreso**: Milestones mensuales del itinerario (12 meses × 4 áreas)
-- **📖 Historial**: Revisa tus días anteriores
-- **📱 Mobile First**: Diseño responsive, funciona perfectamente en celular
-- **📲 Instalable como PWA**: Agrega a pantalla de inicio en tu celular
-- **💾 Sincronización**: Datos guardados en la nube (Supabase)
+## ✨ Features
 
----
+### Core Features
+- 📅 **Daily Plan Display** - Shows current and next activities in real-time
+- 🎓 **Multi-Area Curriculum** - 12-month learning paths for each discipline
+- ✅ **Habit Tracking** - Track 6 core daily habits with Supabase sync
+- 📊 **Progress Dashboard** - Visual progress indicators and monthly milestones
+- 🔄 **Flexible Scheduling** - Two schedule versions (A & B) for different workload days
+- 📱 **Mobile-Friendly** - PWA support for mobile installation
 
-## 🚀 Stack
+### Technical Features
+- **Supabase Integration** - Real-time database with habit persistence
+- **Server Actions** - Next.js 14 Server Actions for database operations
+- **Type-Safe** - Full TypeScript support
+- **Professional UI** - Terminal-inspired design with VT323 monospace font
+- **Real-time Updates** - Dynamic schedule with hourly activity tracking
 
-```
-Frontend:  Next.js 14 + Tailwind CSS
-Database:  Supabase (PostgreSQL)
-Deploy:    Vercel
-Mobile:    PWA (instalable como app nativa)
-Cost:      $0/mes
-```
+## 🚀 Getting Started
 
----
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+- Supabase account
 
-## 📦 Instalación Rápida
+### Installation
 
-### Paso 1: Clonar el repo
-
+1. **Clone the repository**
 ```bash
-git clone https://github.com/[tu-usuario]/bitacora.git
+git clone https://github.com/C0z1/Itinerario.git
 cd bitacora
+```
+
+2. **Install dependencies**
+```bash
 npm install
 ```
 
-### Paso 2: Configurar Supabase
-
-1. Crea un proyecto en [supabase.com](https://supabase.com) (free tier)
-2. Ejecuta el SQL schema en `supabase/migrations/001_initial_schema.sql`
-3. Copia tus credenciales
-
-### Paso 3: Variables de entorno
-
-```bash
-cp .env.local.example .env.local
-# Edita .env.local con tus credenciales de Supabase
+3. **Setup environment variables**
+Create `.env.local`:
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 ```
 
-### Paso 4: Desarrollar localmente
+4. **Setup Supabase database**
+Run migration: `supabase/migrations/001_initial_schema.sql` in Supabase SQL Editor
 
+5. **Start development server**
 ```bash
 npm run dev
-# Abre http://localhost:3000
 ```
 
-### Paso 5: Desplegar
+Open [http://localhost:3000](http://localhost:3000)
 
-Push a GitHub y conecta en [vercel.com](https://vercel.com). Auto-deploy automático.
-
-**Ver instrucciones detalladas en [DEPLOYMENT.md](./DEPLOYMENT.md)**
-
----
-
-## 📱 Características Mobile
-
-### Navegación por tabs (mobile)
-
-- **Hoy**: Vista principal con hábitos, horario y log
-- **Tareas**: Gestión de tareas por área
-- **Progreso**: Milestones del mes actual
-- **Log**: Historial de días anteriores
-
-### Usar como app nativa
-
-1. **Chrome**: Menú (⋮) → "Instalar aplicación"
-2. **Safari**: Compartir → "Agregar a pantalla de inicio"
-
----
-
-## 🗂️ Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 bitacora/
 ├── app/                          # Next.js App Router
-│   ├── today/page.tsx            # Vista principal
-│   ├── tasks/page.tsx            # Gestión de tareas
-│   ├── progress/page.tsx         # Progreso mensual
-│   ├── log/page.tsx              # Historial
-│   └── layout.tsx                # Layout principal
+│   ├── layout.tsx
+│   ├── today/page.tsx           # Main dashboard
+│   ├── tasks/page.tsx
+│   ├── progress/page.tsx
+│   └── log/page.tsx
+│
 ├── components/
-│   ├── layout/
-│   │   ├── Header.tsx            # Header + toggle versión A/B
-│   │   └── BottomNav.tsx         # Navegación mobile
-│   └── today/
-│       ├── HabitChecklist.tsx    # 6 hábitos
-│       ├── ScheduleTimeline.tsx  # Horario del día
-│       └── QuickLogInput.tsx     # Nota del día
+│   ├── layout/                  # Shared components
+│   │   ├── BootScreenWrapper.tsx
+│   │   ├── PipboyFrame.tsx
+│   │   ├── RobcoBootScreen.tsx
+│   │   └── ...
+│   │
+│   └── today/                   # Dashboard components
+│       ├── DailyPlan.tsx
+│       ├── AreaDetailsModal.tsx
+│       ├── HabitChecklist.tsx
+│       └── ...
+│
 ├── lib/
 │   ├── constants/
-│   │   ├── schedule.ts           # Horarios Version A y B
-│   │   ├── milestones.ts         # 48 milestones del itinerario
-│   │   └── habits.ts             # 6 hábitos fijos
+│   │   ├── itinerary.ts        # 12-month curriculum
+│   │   ├── schedule.ts
+│   │   ├── habits.ts
+│   │   └── milestones.ts
+│   │
+│   ├── actions/                # Server Actions
+│   │   ├── habits.ts
+│   │   ├── tasks.ts
+│   │   └── ...
+│   │
 │   └── supabase/
-│       └── client.ts             # Cliente Supabase
-├── public/
-│   └── manifest.json             # PWA manifest
-└── supabase/
-    └── migrations/
-        └── 001_initial_schema.sql # Schema completo
+│       ├── client.ts
+│       └── server.ts
+│
+├── public/                      # Static assets
+├── supabase/migrations/         # Database migrations
+├── docs/                        # Documentation
+└── package.json
 ```
 
----
+## 🛠️ Technology Stack
 
-## 🎯 Funcionalidades Core
+- **Frontend:** Next.js 14, React 18, TypeScript
+- **Styling:** Tailwind CSS
+- **Database:** Supabase (PostgreSQL)
+- **Deployment:** Vercel (recommended)
 
-### Marcar hábito diario
+## 📊 Database Schema
 
-```
-Toca checkbox → Se guarda en localStorage (luego en Supabase)
-```
+Tables: habits, habit_logs, tasks, daily_logs, milestones
+All tables include Row Level Security (RLS) policies.
 
-### Agregar tarea
+## 🎨 Design System
 
-```
-Escribe título → Selecciona área → Presiona Enter o toca +
-```
+- **Color:** Terminal green (#22c55e) on dark background
+- **Font:** VT323 (monospace)
+- **Style:** Professional, minimal terminal aesthetic
 
-### Ver horario actual
+## 📚 The 12-Month Plan
 
-- El bloque activo se resalta dinámicamente
-- Se actualiza cada minuto
-- Muestra hora actual
+**4 Concurrent Areas:**
 
-### Seguir progreso mensual
+1. **Astrophysics** - Mathematics → Real research contribution
+2. **Technology/ITC** - Advanced software engineering curriculum
+3. **Physical Training** - 5 days/week, 2 hours/day fitness regimen
+4. **Japanese** - Daily language learning (JLPT N4+ level)
 
-- Completa los milestones del mes
-- Rastrear avance en 4 áreas
-- Guardar evidencia de logros
+Each area has monthly objectives and verifiable achievements.
 
----
-
-## 🔧 Datos: localStorage vs Supabase
-
-**Por ahora**: Todo se guarda en localStorage (memoria del navegador)
-- ✓ Funciona sin internet (después de cargar la página)
-- ✗ Datos solo en este navegador
-
-**Después**: Conectar a Supabase
-- ✓ Sincroniza en múltiples dispositivos
-- ✓ Datos persistentes en servidor
-- ✓ Autenticación con email
-
----
-
-## 📊 Datos de Ejemplo
-
-### Hábitos (6 fijos)
-
-- 🔭 Astrofísica
-- 💻 Programación
-- 🏋️ Físico
-- 🧘 Mental
-- 🇯🇵 Japonés
-- 🎯 Enfoque
-
-### Áreas de tareas
-
-- **ITC**: Ingeniería en Tecnologías Computacionales
-- **Astrofísica**: Estudio de astrophysics
-- **Físico**: Entrenamientos, fitness
-- **Japonés**: Idioma, anime, manga
-
-### Horario Versión A (normal)
-
-| Hora | Actividad |
-|---|---|
-| 7-11 | Estudio mañana |
-| 11-13 | Comida / descanso |
-| 13-15 | Gym |
-| 15-19 | Clases ITC |
-| 19-21 | Tareas noche |
-
-### Horario Versión B (carga alta ITC)
-
-| Hora | Actividad |
-|---|---|
-| 7-9 | ITC intensivo |
-| 9-11 | Astrofísica |
-| 11-13 | Comida / Repasar |
-| 13-15 | Gym |
-| 15-21 | ITC bloq. tarde/noche |
-
-### Milestones (12 meses × 4 áreas = 48 total)
-
-Ejemplos:
-
-- **Mes 1 - ITC**: Implementar Dijkstra y AVL en Python
-- **Mes 1 - Astrofísica**: Resolver 20 problemas de física
-- **Mes 6 - Progreso**: Publicar análisis con datos reales
-- **Mes 12 - Final**: Portafolio completamente documentado
-
----
-
-## 🛠️ Desarrollo
-
-### Instalar dependencias
-
-```bash
-npm install
-```
-
-### Ejecutar localmente
-
-```bash
-npm run dev
-# http://localhost:3000
-```
-
-### Build para producción
+## 🚀 Deployment
 
 ```bash
 npm run build
-npm run start
+vercel
 ```
 
----
+## 📝 License
 
-## 📋 Checklist de Deploy
+MIT License
 
-- [ ] Proyecto Supabase creado
-- [ ] Schema SQL ejecutado
-- [ ] Variables de entorno configuradas
-- [ ] `.env.local` creado (NO commitearlo)
-- [ ] Repo en GitHub
-- [ ] Vercel conectado
-- [ ] Variables de entorno en Vercel
-- [ ] URL de Supabase actualizada en auth callback
-- [ ] App funciona en https://tudominio.vercel.app
-- [ ] Instalable en celular como PWA
+## 🙌 Contributors
+
+- Felix (Creator, 12-month itinerary design)
+- Claude AI (Implementation & architecture)
 
 ---
 
-## 📝 TODO (Próximas mejoras)
-
-- [ ] Conectar a Supabase real (reemplazar localStorage)
-- [ ] Autenticación con email (magic link)
-- [ ] Dark mode (aunque ya está implementado)
-- [ ] Gráficos de progreso (Chart.js o Recharts)
-- [ ] Exportar datos (PDF, JSON)
-- [ ] Sincronización en tiempo real entre dispositivos
-- [ ] Notificaciones de recordatorio
-- [ ] Integración con Google Calendar
-- [ ] Análisis de productividad
-
----
-
-## 📄 Licencia
-
-MIT License - libre de usar y modificar
-
----
-
-## 💬 Soporte
-
-Si tienes preguntas:
-
-1. Revisa [DEPLOYMENT.md](./DEPLOYMENT.md) para errores de deploy
-2. Verifica `.env.local` está configurado
-3. Mira los logs en Vercel → Deployments
-4. Revisa la consola del navegador (F12)
-
----
-
-## 🎓 Hecho para
-
-**Félix** - Estudiante de ITC con metas ambiciosas en:
-- **ITC**: Nivel Senior Engineer
-- **Astrofísica**: Contribución real al campo
-- **Físico**: Disciplina y mejora continua
-- **Japonés**: Entender anime sin subtítulos
-
-El plan completo está en el PDF del itinerario de 12 meses.
-
----
-
-**Bitácora**: Tu compañera diaria en el viaje hacia tus metas. 🚀
+**Consistent progress compounds exponentially. This tool maintains that consistency.**
