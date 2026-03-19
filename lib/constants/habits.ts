@@ -10,37 +10,37 @@ export const HABITS: Habit[] = [
   {
     name: "Astrofísica",
     area: "astrofisica",
-    icon: "🔭",
+    icon: "A",
     sort_order: 1,
   },
   {
     name: "Programación",
     area: "itc",
-    icon: "💻",
+    icon: "P",
     sort_order: 2,
   },
   {
     name: "Físico",
     area: "fisico",
-    icon: "🏋️",
+    icon: "F",
     sort_order: 3,
   },
   {
     name: "Mental",
     area: "mental",
-    icon: "🧘",
+    icon: "M",
     sort_order: 4,
   },
   {
     name: "Japonés",
     area: "japones",
-    icon: "🇯🇵",
+    icon: "J",
     sort_order: 5,
   },
   {
     name: "Enfoque",
     area: "enfoque",
-    icon: "🎯",
+    icon: "E",
     sort_order: 6,
   },
 ];

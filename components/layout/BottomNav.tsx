@@ -19,7 +19,7 @@ export function BottomNav({ currentPage }: BottomNavProps) {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-gray-dark to-gray-dark/95 border-t-2 border-green-700 md:hidden backdrop-blur-sm">
+    <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-gray-950 to-gray-950/95 border-t-2 border-green-700 md:hidden backdrop-blur-sm">
       <div className="flex justify-around">
         {navItems.map((item) => (
           <Link

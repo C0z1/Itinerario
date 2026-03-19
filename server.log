@@ -1,0 +1,13 @@
+
+> bitacora@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1343ms
+ ○ Compiling /today ...
+ ✓ Compiled /today in 2.1s (588 modules)
+ GET /today 200 in 2249ms
