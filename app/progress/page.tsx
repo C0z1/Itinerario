@@ -11,11 +11,9 @@ export default function ProgressPage() {
   const [completedMilestones, setCompletedMilestones] = useState<{
     [key: string]: boolean;
   }>({});
-  const [mounted, setMounted] = useState(false);
   const [dayVersion, setDayVersion] = useState<"A" | "B">("A");
 
   useEffect(() => {
-    setMounted(true);
 
     // Load milestones for current month
     const currentMilestones = getCurrentMonthMilestones();
@@ -40,8 +38,6 @@ export default function ProgressPage() {
     setCompletedMilestones(updated);
     localStorage.setItem("completedMilestones", JSON.stringify(updated));
   };
-
-  if (!mounted) return null;
 
   const now = new Date();
   const monthNames = [

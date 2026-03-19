@@ -16,11 +16,9 @@ export default function TasksPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [activeArea, setActiveArea] = useState("itc");
   const [newTaskTitle, setNewTaskTitle] = useState("");
-  const [mounted, setMounted] = useState(false);
   const [dayVersion, setDayVersion] = useState<"A" | "B">("A");
 
   useEffect(() => {
-    setMounted(true);
     // Load tasks from localStorage
     const saved = localStorage.getItem("tasks");
     if (saved) {
@@ -65,8 +63,6 @@ export default function TasksPage() {
   };
 
   const filteredTasks = tasks.filter((t) => t.area === activeArea);
-
-  if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-fallout-dark via-fallout-dark to-fallout-darker text-vault-300 pb-24">

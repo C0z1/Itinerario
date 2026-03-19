@@ -10,10 +10,8 @@ interface DailyPlanProps {
 export function DailyPlan({ dayVersion }: DailyPlanProps) {
   const [currentTime, setCurrentTime] = useState({ hour: 0, minute: 0 });
   const [currentMonth, setCurrentMonth] = useState(1);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
 
     const updateTime = () => {
       const now = new Date();
@@ -29,8 +27,6 @@ export function DailyPlan({ dayVersion }: DailyPlanProps) {
     const timer = setInterval(updateTime, 60000);
     return () => clearInterval(timer);
   }, []);
-
-  if (!mounted) return null;
 
   const schedule = SCHEDULES[dayVersion];
   const currentBlockTime = currentTime.hour;

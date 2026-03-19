@@ -9,14 +9,12 @@ import { AreaDetailsModal } from "@/components/today/AreaDetailsModal";
 import { DailyPlan } from "@/components/today/DailyPlan";
 
 export default function TodayPage() {
-  const [mounted, setMounted] = useState(false);
   const [dayVersion, setDayVersion] = useState<"A" | "B">("A");
   const [habitCompletion, setHabitCompletion] = useState(0);
   const [tasksPending, setTasksPending] = useState(0);
   const [selectedArea, setSelectedArea] = useState<"astrofisica" | "itc" | "fisico" | "japones" | null>(null);
 
   useEffect(() => {
-    setMounted(true);
     const saved = localStorage.getItem("dayVersion");
     if (saved) {
       setDayVersion(saved as "A" | "B");
@@ -48,8 +46,6 @@ export default function TodayPage() {
       }
     }
   }, []);
-
-  if (!mounted) return null;
 
   const today = new Date();
   const days = ["DOM", "LUN", "MAR", "MIÉ", "JUE", "VIE", "SÁB"];

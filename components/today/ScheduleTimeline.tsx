@@ -12,10 +12,8 @@ interface ScheduleTimelineProps {
 
 export function ScheduleTimeline({ dayVersion }: ScheduleTimelineProps) {
   const [currentTime, setCurrentTime] = useState({ hour: 0, minute: 0, second: 0 });
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
 
     const updateTime = () => {
       const now = new Date();
@@ -30,8 +28,6 @@ export function ScheduleTimeline({ dayVersion }: ScheduleTimelineProps) {
     const timer = setInterval(updateTime, 1000);
     return () => clearInterval(timer);
   }, []);
-
-  if (!mounted) return null;
 
   const schedule = getScheduleForVersion(dayVersion);
   const activeBlock = getActiveBlock(schedule, currentTime.hour);

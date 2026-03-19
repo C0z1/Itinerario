@@ -14,11 +14,9 @@ interface LogEntry {
 
 export default function LogPage() {
   const [entries, setEntries] = useState<LogEntry[]>([]);
-  const [mounted, setMounted] = useState(false);
   const [dayVersion, setDayVersion] = useState<"A" | "B">("A");
 
   useEffect(() => {
-    setMounted(true);
 
     // Generate log entries from localStorage
     const logs: LogEntry[] = [];
@@ -60,8 +58,6 @@ export default function LogPage() {
       setDayVersion(savedVersion as "A" | "B");
     }
   }, []);
-
-  if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-fallout-dark via-fallout-dark to-fallout-darker text-vault-300 pb-24">
